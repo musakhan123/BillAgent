@@ -10,7 +10,7 @@ Bijli Agent lets Pakistani electricity consumers upload their PESCO bill (image 
 
 | Name | Role |
 |---|---|
-| **Muhammad Musa** | Lead Developer |
+| **Muhammad Musa** | Team Member |
 | **Muhammad Zikria Shah** | Team Member |
 | **Hajia Akhlaq** | Team Member |
 
