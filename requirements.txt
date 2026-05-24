@@ -18,38 +18,19 @@ npm >= 9.0.0        # bundled with Node.js 18+
 #   macOS   : brew install poppler
 #   Ubuntu  : sudo apt install poppler-utils
 
-# Google Chrome or Chromium – required by puppeteer-core for web scraping
-#   puppeteer-core does NOT bundle a browser; you must supply one.
-#   Set the executable path in your code or PUPPETEER_EXECUTABLE_PATH env var.
-#   Download: https://www.google.com/chrome/  (or chromium-browser on Linux)
-
 # ─────────────────────────────────────────────
 # 3. NPM PACKAGES  (installed via: npm install)
 # ─────────────────────────────────────────────
-@google/generative-ai@^0.21.0      # Google Gemini API client
 @langchain/core@^1.1.45            # LangChain core
 @langchain/google-genai@^2.1.30    # LangChain × Gemini integration
-axios@^1.16.0                      # HTTP client
-canvas@^3.2.3                      # Image processing (requires build tools – see below)
-cheerio@^1.2.0                     # HTML parsing
 dotenv@^16.4.5                     # .env loader
 express@^4.19.2                    # Web framework
 multer@^1.4.5-lts.1                # File upload middleware
-nodemailer@^6.9.14                 # Email sending (SMTP)
 pdf-poppler@^0.2.3                 # PDF → image (wraps Poppler CLI)
-pdfjs-dist@^3.11.174               # PDF rendering
 puppeteer-core@^24.43.0            # Headless browser automation
-
-# canvas build dependencies (native addon – needed if npm install fails for canvas):
-#   Windows : npm install --global windows-build-tools  (runs as Administrator)
-#             or install Visual Studio Build Tools + Python 3
-#   macOS   : xcode-select --install
-#   Ubuntu  : sudo apt install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 
 # ─────────────────────────────────────────────
 # 4. ENVIRONMENT VARIABLES  (create a .env file)
 # ─────────────────────────────────────────────
 # GEMINI_API_KEY=          # Google Gemini API key
-# EMAIL_USER=              # SMTP sender address
-# EMAIL_PASS=              # SMTP password or app password
 # PORT=3000                # (optional) server port, defaults to 3000

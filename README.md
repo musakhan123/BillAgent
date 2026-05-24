@@ -33,11 +33,10 @@ Bijli Agent lets Pakistani electricity consumers upload their PESCO bill (image 
 ## Tech Stack
 
 - **Runtime**: Node.js + Express
-- **AI / OCR**: Google Gemini 2.5 Flash via `@google/generative-ai` + LangChain
-- **PDF processing**: pdf-poppler, pdfjs-dist
-- **Web scraping**: Puppeteer-core, Cheerio, Axios
+- **AI / OCR**: Google Gemini 2.5 Flash via LangChain (`@langchain/google-genai`)
+- **PDF processing**: pdf-poppler
+- **Web scraping**: Puppeteer-core
 - **File uploads**: Multer
-- **Email drafting**: Nodemailer
 
 ---
 
@@ -56,10 +55,6 @@ Download from https://nodejs.org (LTS version recommended).
 - **macOS**: `brew install poppler`
 - **Ubuntu/Debian**: `sudo apt install poppler-utils`
 
-### 3. Google Chrome or Chromium (web scraping)
-`puppeteer-core` does not bundle a browser. Install Google Chrome normally:  
-https://www.google.com/chrome/
-
 ---
 
 ## Setup & Installation
@@ -77,12 +72,6 @@ npm install
 cp .env.example .env
 ```
 
-> **Windows users**: If `npm install` fails on the `canvas` package, run this first (as Administrator):
-> ```
-> npm install --global windows-build-tools
-> ```
-> Then re-run `npm install`.
-
 ---
 
 ## Environment Variables
@@ -92,11 +81,6 @@ Open `.env` and fill in the following:
 | Variable | Description |
 |---|---|
 | `GEMINI_API_KEY` | Your Google Gemini API key — get one free at https://aistudio.google.com |
-| `EMAIL_HOST` | SMTP server (e.g. `smtp.gmail.com`) |
-| `EMAIL_PORT` | SMTP port (e.g. `587`) |
-| `EMAIL_USER` | Your email address |
-| `EMAIL_PASS` | Your email app password (for Gmail: https://myaccount.google.com/apppasswords) |
-| `EMAIL_FROM` | Sender address shown on complaint emails |
 | `PORT` | Port to run the server on (default: `3000`) |
 
 ---

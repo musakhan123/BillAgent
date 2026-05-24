@@ -8,18 +8,12 @@
     "dev": "node --watch server.js"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
     "@langchain/core": "^1.1.45",
     "@langchain/google-genai": "^2.1.30",
-    "axios": "^1.16.0",
-    "canvas": "^3.2.3",
-    "cheerio": "^1.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.14",
     "pdf-poppler": "^0.2.3",
-    "pdfjs-dist": "^3.11.174",
     "puppeteer-core": "^24.43.0"
   }
 }
