@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Bijli Agent ⚡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0a1628;
+      --navy-800:  #0d1e38;
+      --navy-700:  #142444;
+      --yellow:    #FFD700;
+      --yellow-dk: #d4b200;
+      --green:     #006633;
+      --teal:      #00b388;
+      --red:       #e74c3c;
+      --blue:      #3b82f6;
+      --white:     #ffffff;
+      --muted:     #7a9abc;
+      --border:    #1a3060;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--navy);
+      background-image:
+        linear-gradient(rgba(255,215,0,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,215,0,0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,215,0,0.04) 0%, transparent 100%);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .header-logo {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      background: transparent;
+      mix-blend-mode: multiply;
+    }
+
+    .logo {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 900;
+      color: var(--yellow);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .tagline {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #ffffff;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      opacity: 0.75;
+    }
+
+    .green-stripe {
+      height: 3px;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: 660px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--navy-800);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+    }
+
+    /* ── DROP ZONE ── */
+    .drop-zone {
+      border: 2px dashed #FFD700;
+      background: rgba(255,215,0,0.05);
+      padding: 2.75rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: border-color .2s, background .2s;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.over {
+      border-color: #FFD700;
+      background: rgba(255,215,0,0.10);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-bolt {
+      display: block;
+      font-size: 2.8rem;
+      line-height: 1;
+      margin-bottom: 0.9rem;
+      filter: drop-shadow(0 0 12px rgba(255,215,0,0.4));
+    }
+
+    .drop-text {
+      font-size: 0.97rem;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .drop-text em {
+      color: var(--yellow);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .drop-hint {
+      font-size: 0.73rem;
+      color: var(--border);
+      margin-top: 0.45rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .drop-filename {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      color: var(--yellow);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      word-break: break-all;
+    }
+
+    /* ── ANALYZE BUTTON ── */
+    #analyzeBtn {
+      display: block !important;
+      width: 100% !important;
+      margin-top: 1.25rem;
+      padding: 1rem 1.5rem;
+      background-color: #FFD700 !important;
+      color: #000000 !important;
+      border: none !important;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800 !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color .15s, box-shadow .15s;
+      opacity: 1 !important;
+    }
+
+    #analyzeBtn:hover:not(:disabled) {
+      background-color: #ffe033 !important;
+      box-shadow: 0 0 28px rgba(255,215,0,0.45);
+    }
+
+    #analyzeBtn:active:not(:disabled) {
+      background-color: #e6c200 !important;
+    }
+
+    #analyzeBtn:disabled {
+      background-color: #FFD700 !important;
+      color: #000000 !important;
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.45 !important;
+    }
+
+    /* ── STEPS ── */
+    #steps {
+      display: none;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-left: 3px solid var(--border);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+
+    .step.active {
+      border-left-color: var(--yellow);
+      color: var(--white);
+      background: rgba(255,215,0,0.05);
+    }
+
+    .step.done  { border-left-color: var(--teal); color: var(--teal); }
+    .step.error { border-left-color: var(--red);  color: var(--red);  }
+
+    .step-icon {
+      font-size: 1.15rem;
+      width: 1.4rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .step-body {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .step-dots { display: none; }
+
+    .step.active .step-dots {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .step-dots span {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: var(--yellow);
+      animation: dotBlink 1.4s infinite;
+    }
+
+    .step-dots span:nth-child(2) { animation-delay: .22s; }
+    .step-dots span:nth-child(3) { animation-delay: .44s; }
+
+    @keyframes dotBlink {
+      0%, 80%, 100% { opacity: 0.12; }
+      40%           { opacity: 1; }
+    }
+
+    /* ── ERROR BANNER ── */
+    #errorBanner {
+      display: none;
+      border: 1px solid var(--red);
+      border-left: 4px solid var(--red);
+      background: rgba(231,76,60,0.08);
+      color: #ff8a80;
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    /* ── RESULT CARD ── */
+    .result-card {
+      border-left: 5px solid var(--border);
+      transition: border-left-color .3s;
+    }
+
+    .result-card.verdict-overbilled { border-left-color: var(--red); }
+    .result-card.verdict-correct    { border-left-color: var(--teal); }
+    .result-card.verdict-credit     { border-left-color: var(--blue); }
+
+    .verdict-header { margin-bottom: 1.5rem; }
+
+    .verdict-status {
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .verdict-status.overbilled { color: var(--red); }
+    .verdict-status.correct    { color: var(--teal); }
+    .verdict-status.credit     { color: var(--blue); }
+
+    .verdict-sub {
+      margin-top: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── RESULT GRID ── */
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 440px) {
+      .result-grid { grid-template-columns: 1fr; }
+    }
+
+    .result-item label {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .result-item span {
+      font-size: 0.93rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.25rem 0;
+    }
+
+    /* ── MESSAGE BOX ── */
+    .message-box {
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+    }
+
+    .message-box.overbilled {
+      background: rgba(231,76,60,0.07);
+      border-left-color: var(--red);
+      color: #ff8a80;
+    }
+
+    .message-box.credit {
+      background: rgba(59,130,246,0.07);
+      border-left-color: var(--blue);
+      color: #93c5fd;
+    }
+
+    .message-box.correct {
+      background: rgba(0,179,136,0.07);
+      border-left-color: var(--teal);
+      color: #6ee7b7;
+    }
+
+    /* ── COMPLAINT SECTION ── */
+    .section-label {
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.5rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    #complaintBox {
+      display: none;
+      width: 100%;
+      min-height: 280px;
+      padding: 1rem;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      color: #7a9abc;
+      font-family: 'Courier New', monospace;
+      font-size: 0.74rem;
+      line-height: 1.75;
+      resize: vertical;
+      outline: none;
+    }
+
+    #complaintBox:focus {
+      border-color: var(--yellow);
+    }
+
+    .copy-btn {
+      margin-top: 0.75rem;
+      padding: 0.55rem 1.25rem;
+      border: 1.5px solid var(--yellow);
+      background: transparent;
+      color: var(--yellow);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    .copy-btn:hover {
+      background: var(--yellow);
+      color: #000;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.25rem 2rem;
+      font-size: 0.72rem;
+      color: var(--border);
+      letter-spacing: 0.06em;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer strong { color: var(--yellow); }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-logo {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 480px) {
+      header { padding: 1.75rem 1rem 1.25rem; }
+      .card  { padding: 1.25rem; }
+      .drop-zone { padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <img src="/images/bijli-logo.png" height="80px" style="display: block;">
+      <div>
+        <h1 style="color: #FFD700; font-weight: 900; font-size: 2.5rem; margin: 0;">BILL AGENT</h1>
+        <p style="color: #ffffff; margin: 0; font-size: 0.9rem;">Fighting overbilling. One bill at a time.</p>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="green-stripe"></div>
+
+<main>
+
+  <!-- Upload Card -->
+  <div class="card">
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" />
+      <span class="drop-bolt">⚡</span>
+      <div class="drop-text">Drop your PESCO bill here or <em>click to upload</em></div>
+      <div class="drop-hint">PDF &nbsp;·&nbsp; JPG &nbsp;·&nbsp; PNG &nbsp;|&nbsp; Max 20 MB</div>
+      <div class="drop-filename" id="filename"></div>
+    </div>
+    <button id="analyzeBtn" disabled style="background: #FFD700 !important; color: #1a1a2e !important; font-weight: 800 !important; width: 100%; padding: 18px; font-size: 18px; border: none; cursor: pointer; letter-spacing: 2px;">ANALYZE MY BILL →</button>
+  </div>
+
+  <!-- Status Steps -->
+  <div class="card" id="stepsCard" style="display:none;">
+    <div id="steps">
+      <div class="step" id="step1">
+        <span class="step-icon">📄</span>
+        <div class="step-body">
+          <span>Reading bill with AI</span>
+          <div class="step-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="step" id="step2">
+        <span class="step-icon">🧮</span>
+        <div class="step-body">
+          <span>Calculating correct amount</span>
+          <div class="step-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="step" id="step3">
+        <span class="step-icon">📋</span>
+        <div class="step-body">
+          <span>Preparing complaint</span>
+          <div class="step-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Banner -->
+  <div id="errorBanner"></div>
+
+  <!-- Result Card -->
+  <div class="card result-card" id="resultCard" style="display:none;">
+    <div id="verdictBadge"></div>
+    <div class="result-grid" id="resultGrid"></div>
+    <hr class="divider" />
+    <div class="message-box" id="verdictMessage"></div>
+    <div id="complaintSection" style="display:none;">
+      <div class="section-label">Complaint Letter — Ready to Send</div>
+      <textarea id="complaintBox" readonly></textarea>
+      <button class="copy-btn" id="copyBtn">Copy Letter</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>Powered by <strong>Gemini AI</strong> &nbsp;·&nbsp; NEPRA Tariff Data &nbsp;·&nbsp; Built for Peshawar</span>
+    <div class="footer-brand">
+      <span>Built by TeraByte</span>
+      <img src="/images/team-logo.png" height="50px" style="display: block; background: #FFD700; padding: 5px; border-radius: 4px;">
+    </div>
+  </div>
+</footer>
+
+<script>
+  const dropZone    = document.getElementById('dropZone');
+  const fileInput   = document.getElementById('fileInput');
+  const filename    = document.getElementById('filename');
+  const analyzeBtn  = document.getElementById('analyzeBtn');
+  const stepsCard   = document.getElementById('stepsCard');
+  const stepsEl     = document.getElementById('steps');
+  const errorBanner = document.getElementById('errorBanner');
+  const resultCard  = document.getElementById('resultCard');
+
+  // Debug: log computed button background color
+  console.log('Button computed background:', getComputedStyle(analyzeBtn).backgroundColor);
+
+  // ── File selection ──────────────────────────────────────────────────────────
+  function setFile(file) {
+    if (!file) return;
+    filename.textContent = file.name;
+    analyzeBtn.disabled  = false;
+  }
+
+  fileInput.addEventListener('change', () => setFile(fileInput.files[0]));
+
+  dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('over');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      fileInput.files = dt.files;
+      setFile(file);
+    }
+  });
+
+  // ── Steps helper ────────────────────────────────────────────────────────────
+  function setStep(id, state, icon) {
+    const el = document.getElementById(id);
+    el.className = `step ${state}`;
+    el.querySelector('.step-icon').textContent = icon;
+  }
+
+  function activateStep(n) {
+    ['step1','step2','step3'].forEach((id, i) => {
+      if (i + 1 < n)        setStep(id, 'done',  '✅');
+      else if (i + 1 === n) setStep(id, 'active','⚡');
+      else                   setStep(id, '',      '⏳');
+    });
+  }
+
+  function finishSteps(success) {
+    ['step1','step2','step3'].forEach(id =>
+      setStep(id, success ? 'done' : 'error', success ? '✅' : '❌')
+    );
+  }
+
+  // ── Result rendering ────────────────────────────────────────────────────────
+  function renderResult(data) {
+    const bill = data.billData    || {};
+    const disc = data.discrepancy || {};
+    const verd = data.verdict     || {};
+
+    // Card border class
+    const borderClass = { overbilled: 'verdict-overbilled', correct: 'verdict-correct', credit: 'verdict-credit' };
+    resultCard.className = `card result-card ${borderClass[verd.status] || ''}`;
+
+    // Verdict heading
+    const badgeEl = document.getElementById('verdictBadge');
+    const verdictMap = {
+      overbilled: ['⚠ OVERBILLED',   'overbilled'],
+      correct:    ['✓ BILL CORRECT',  'correct'],
+      credit:     ['◈ CREDIT BILL',   'credit'],
+    };
+    const [label, cls] = verdictMap[verd.status] || ['UNKNOWN', 'correct'];
+    badgeEl.innerHTML = `
+      <div class="verdict-header">
+        <div class="verdict-status ${cls}">${label}</div>
+        <div class="verdict-sub">Bill analysis complete</div>
+      </div>`;
+
+    // Info grid
+    const isCredit    = verd.status === 'credit';
+    const displayUnits = bill.display_units != null ? bill.display_units : bill.units_consumed;
+    const baseFields = [
+      ['Consumer ID',    bill.consumer_id   || '—'],
+      ['Meter Number',   bill.meter_no      || '—'],
+      ['Bill Month',     bill.bill_month    || '—'],
+      ['Due Date',       bill.due_date      || '—'],
+      ['Units Consumed', displayUnits       != null ? displayUnits : '—'],
+      ['Amount Charged', disc.chargedAmount != null ? `PKR ${disc.chargedAmount.toLocaleString()}` : '—'],
+    ];
+    const fields = isCredit ? baseFields : [
+      ...baseFields,
+      ['Correct Amount', disc.correctAmount != null ? `PKR ${disc.correctAmount.toLocaleString()}` : '—'],
+      ['Reference No',   bill.reference_no  || '—'],
+    ];
+    document.getElementById('resultGrid').innerHTML = fields.map(([lbl, val]) =>
+      `<div class="result-item"><label>${lbl}</label><span>${val}</span></div>`
+    ).join('');
+
+    // Verdict message
+    const msgEl = document.getElementById('verdictMessage');
+    msgEl.className = `message-box ${verd.status || 'correct'}`;
+    msgEl.style.whiteSpace = 'pre-line';
+    msgEl.textContent = verd.message || '';
+
+    // Complaint letter
+    const complaintSection = document.getElementById('complaintSection');
+    const complaintBox     = document.getElementById('complaintBox');
+    if (data.complaintDraft && data.complaintDraft.body) {
+      complaintSection.style.display = 'block';
+      complaintBox.style.display     = 'block';
+      complaintBox.value = data.complaintDraft.body;
+    } else {
+      complaintSection.style.display = 'none';
+    }
+
+    resultCard.style.display = 'block';
+  }
+
+  // ── Copy button ─────────────────────────────────────────────────────────────
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const box = document.getElementById('complaintBox');
+    box.select();
+    navigator.clipboard.writeText(box.value).catch(() => document.execCommand('copy'));
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'COPIED ✅';
+    setTimeout(() => btn.textContent = 'Copy Letter', 2000);
+  });
+
+  // ── Analyze ─────────────────────────────────────────────────────────────────
+  analyzeBtn.addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    errorBanner.style.display = 'none';
+    resultCard.style.display  = 'none';
+    stepsCard.style.display   = 'block';
+    stepsEl.style.display     = 'flex';
+    analyzeBtn.disabled       = true;
+
+    activateStep(1);
+
+    const formData = new FormData();
+    formData.append('bill', file);
+
+    try {
+      const res = await fetch('/analyze', { method: 'POST', body: formData });
+
+      activateStep(2);
+      await new Promise(r => setTimeout(r, 400));
+
+      activateStep(3);
+      await new Promise(r => setTimeout(r, 300));
+
+      const data = await res.json();
+
+      if (!res.ok || data.error) throw new Error(data.error || res.statusText);
+
+      finishSteps(true);
+      await new Promise(r => setTimeout(r, 500));
+      stepsCard.style.display = 'none';
+
+      renderResult(data);
+    } catch (err) {
+      finishSteps(false);
+      errorBanner.style.display = 'block';
+      errorBanner.textContent   = `Error: ${err.message}`;
+    } finally {
+      analyzeBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Dependencies – run `npm install` to restore
+node_modules/
+
+# Environment variables – copy .env.example to .env and fill in your values
+.env
+.env.local
+.env.*.local
+
+# User-uploaded files – created automatically at runtime
+uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
